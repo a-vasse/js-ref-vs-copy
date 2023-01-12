@@ -8,48 +8,70 @@
 
   <script>
     // start with strings, numbers and booleans
+    let age = 100;
+    let age2 = age;
+    console.log(age, age2);
 
-    // Let's say we have an array
+    age = 200;
+    console.log(age, age2); //age2 doesn't change
+
+    age2 = age;
+    console.log(age, age2) //now age2 changes
+
+    // array
     const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
 
-    // and we want to make a copy of it.
+    const team = players;
 
-    // You might think we can just do something like this:
+    console.log(players, team);
 
-    // however what happens when we update that array?
+    team[3] = 'Lux';
+    console.log(players, team); //note: updating the copy will update the original
 
-    // now here is the problem!
+    // we have edited the original array too!
+    // Why? It's because that is an array reference, not an array copy.
+    //They both point to the same array!
 
-    // oh no - we have edited the original array too!
-
-    // Why? It's because that is an array reference, not an array copy. They both point to the same array!
-
-    // So, how do we fix this? We take a copy instead!
-
-    // one way
+    // How to REALLY copy an array, and not just reference it
+    const team2 = players.slice();
+    team2[0] = 'Alex'
+    console.log(players, team2);
 
     // or create a new array and concat the old one in
+    const team3 = [].concat(players);
+    team3[0] = 'Reina'
+    console.log(players, team3);
 
     // or use the new ES6 Spread
+    const team4 = [...players];
+    team4[0] = 'Tofu';
+    console.log(players, team4);
 
-    // now when we update it, the original one isn't changed
 
-    // The same thing goes for objects, let's say we have a person object
+    // The same thing goes for objects. Using equals only references directly.
 
     // with Objects
     const person = {
-      name: 'Wes Bos',
+      name: 'The Person',
       age: 80
     };
 
-    // and think we make a copy:
+    const mans = person
 
-    // how do we take a copy instead?
+    mans.age = 3
+    console.log(person) // person.age = 3
 
-    // We will hopefully soon see the object ...spread
+    //How to copy an object:
+    let next_mans = Object.assign({}, person);
+    console.log(next_mans);
 
-    // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+    next_mans.name = "The Mans"
+    console.log(next_mans); //now name is "The Mans"
 
+    //copy and add/change details
+    next_mans = Object.assign({}, person, { number: 99, age: 12 });
+    console.log(next_mans); //{name: 'The Person', age: 12, number: 99}
+    //note, new arguements are added, current arguements with new values are changed
   </script>
 
 </body>

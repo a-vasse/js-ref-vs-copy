@@ -5,7 +5,7 @@
   <title>JS Reference VS Copy</title>
 </head>
 <body>
-
+  <p>Check the console ---></p>
   <script>
     // start with strings, numbers and booleans
     let age = 100;
@@ -61,7 +61,7 @@
     mans.age = 3
     console.log(person) // person.age = 3
 
-    //How to copy an object:
+    //How to duplicate an object:
     let next_mans = Object.assign({}, person);
     console.log(next_mans);
 
@@ -69,9 +69,35 @@
     console.log(next_mans); //now name is "The Mans"
 
     //copy and add/change details
-    next_mans = Object.assign({}, person, { number: 99, age: 12 });
-    console.log(next_mans); //{name: 'The Person', age: 12, number: 99}
+    this_mans = Object.assign({}, person, { number: 99, age: 12 });
+    console.log(this_mans); //{name: 'The Person', age: 12, number: 99}
     //note, new arguements are added, current arguements with new values are changed
+
+    //this is another way to duplicate an array
+    const mans_mans = {...person};
+    console.log(mans_mans)
+
+    //note: this is only one level deep. For example:
+    const alex = {
+      name: 'Alex',
+      age: 100,
+      social: {
+        twitter: '@alex',
+      }
+    };
+
+    const reina = Object.assign({}, alex);
+    reina.name = 'Reina'
+    reina.social.twitter = '@reina'
+    console.log(alex) //oh no, alex was chanaged again.
+
+    //layers 2+ will still be referenced, and not cloned. To completely clone an object with all layers:
+
+    const tofu = JSON.parse(JSON.stringify(reina))
+    tofu.name = "Tofu"
+    tofu.social.twitter = '@tofu'
+    console.log(reina)
+    console.log(tofu)
   </script>
 
 </body>
